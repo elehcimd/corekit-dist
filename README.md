@@ -2,7 +2,7 @@
 
 This repository hosts encrypted, ready-to-install distributions of CoreKit.
 
-Copyright 2024-2026 Michele Dallachiesa. The source code is not publicly available, but it is open source: anyone who holds a copy may use, modify, and distribute it under the terms of the [Apache License, Version 2.0](LICENSE).
+CoreKit is authored by Michele Dallachiesa <<michele.dallachiesa@sigforge.com>> and it is open source ([Apache 2.0](LICENSE)); the source is not publicly distributed, but anyone who receives a copy may use, modify, and redistribute it.
 
 ## Installation
 
@@ -13,26 +13,6 @@ into a local `.vendor/` directory, and prints a snippet for your
 
 ```sh
 bash <(curl -fsSL https://raw.githubusercontent.com/elehcimd/corekit-dist/main/install.sh) <version:key>
-```
-
-When using [`uv`](https://docs.astral.sh/uv/), add the printed snippet to your
-`pyproject.toml` to install CoreKit from the local wheel:
-
-```toml
-[tool.uv.sources]
-corekit = { path = ".vendor/corekit-<version>-py3-none-any.whl" }
-```
-
-Then run `uv sync` to install it:
-
-```sh
-uv sync
-```
-
-Otherwise, install the wheel directly with `pip`:
-
-```sh
-pip install .vendor/corekit-<version>-py3-none-any.whl
 ```
 
 ## Contact
