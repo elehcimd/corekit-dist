@@ -4,13 +4,19 @@
 # Fail fast on errors, unset variables, and broken pipes.
 set -euo pipefail
 
-# Split the single "<version>:<key>" argument into its parts. The trailing `_`
+# Split the "<version>:<key>" first argument into its parts. The trailing `_`
 # discards anything after a second colon so an unexpected extra field is ignored.
 IFS=':' read -r VERSION KEY _ <<<"${1:-}"
 
+# Optional second argument: --quiet prints only the final confirmation line.
+QUIET=0
+if [[ "${2:-}" == "--quiet" ]]; then
+    QUIET=1
+fi
+
 # Both fields are mandatory; bail out with usage if either is missing.
 if [[ -z "${VERSION}" || -z "${KEY}" ]]; then
-    echo "Usage: install-corekit.sh <version:key>" >&2
+    echo "Usage: install-corekit.sh <version:key> [--quiet]" >&2
     exit 1
 fi
 
@@ -36,6 +42,12 @@ openssl enc -d -aes-256-cbc -pbkdf2 -iter 600000 \
 rm -f "${ENC}"
 
 echo "Fetched CoreKit ${VERSION} into ${VENDOR_DIR}/${WHL}"
+
+# In quiet mode, the one-line confirmation above is all we print.
+if [[ "${QUIET}" -eq 1 ]]; then
+    exit 0
+fi
+
 echo "To install it, add the following to your pyproject.toml:"
 echo ""
 echo "[tool.uv.sources]"
