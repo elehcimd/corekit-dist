@@ -8,15 +8,15 @@ set -euo pipefail
 # discards anything after a second colon so an unexpected extra field is ignored.
 IFS=':' read -r VERSION KEY _ <<<"${1:-}"
 
-# Optional second argument: --quiet prints only the final confirmation line.
-QUIET=0
-if [[ "${2:-}" == "--quiet" ]]; then
-    QUIET=1
+# Optional second argument: --verbose also prints the pyproject.toml instructions.
+VERBOSE=0
+if [[ "${2:-}" == "--verbose" ]]; then
+    VERBOSE=1
 fi
 
 # Both fields are mandatory; bail out with usage if either is missing.
 if [[ -z "${VERSION}" || -z "${KEY}" ]]; then
-    echo "Usage: install-corekit.sh <version:key> [--quiet]" >&2
+    echo "Usage: install-corekit.sh <version:key> [--verbose]" >&2
     exit 1
 fi
 
@@ -43,8 +43,8 @@ rm -f "${ENC}"
 
 echo "Fetched CoreKit ${VERSION} into ${VENDOR_DIR}/${WHL}"
 
-# In quiet mode, the one-line confirmation above is all we print.
-if [[ "${QUIET}" -eq 1 ]]; then
+# By default the one-line confirmation above is all we print; --verbose adds more.
+if [[ "${VERBOSE}" -eq 0 ]]; then
     exit 0
 fi
 
