@@ -7,9 +7,8 @@ CoreKit is authored by Michele Dallachiesa <<michele.dallachiesa@sigforge.com>> 
 ## Installation
 
 Run the command below, replacing `<version:key>` with the version and
-decryption key you were provided. It downloads the encrypted wheel, decrypts it
-into a local `.vendor/` directory, and prints a snippet for your
-`pyproject.toml`:
+decryption key you were provided. It downloads the encrypted wheel, and decrypts it
+into a local `.vendor/` directory:
 
 ```sh
 bash <(curl -fsSL https://raw.githubusercontent.com/elehcimd/corekit-dist/main/install.sh) <version:key>
