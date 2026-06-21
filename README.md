@@ -1,0 +1,2 @@
+# corekit-dist
+CoreKit Distribution
