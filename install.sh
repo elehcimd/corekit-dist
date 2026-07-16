@@ -31,15 +31,15 @@ VENDOR_DIR=".vendor"
 # Destination for the decrypted wheel, consumed by the project as a path source.
 mkdir -p "${VENDOR_DIR}"
 
-# Fetch the encrypted wheel into the current directory.
-curl -fsSL -O "${URL}"
+# Fetch the encrypted wheel into the vendor directory.
+curl -fsSL -o "${VENDOR_DIR}/${ENC}" "${URL}"
 
 # Decrypt it (AES-256-CBC, PBKDF2) using the key from the argument into vendor/.
 openssl enc -d -aes-256-cbc -pbkdf2 -iter 600000 \
-    -in "${ENC}" -out "${VENDOR_DIR}/${WHL}" -pass "pass:${KEY}"
+    -in "${VENDOR_DIR}/${ENC}" -out "${VENDOR_DIR}/${WHL}" -pass "pass:${KEY}"
 
 # Drop the encrypted artifact now that the plaintext wheel is in place.
-rm -f "${ENC}"
+rm -f "${VENDOR_DIR}/${ENC}"
 
 echo "Fetched CoreKit ${VERSION} into ${VENDOR_DIR}/${WHL}"
 
